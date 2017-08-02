@@ -1,2 +1,2 @@
 # random
-C++ random number engines
+C++ pseudo-random number engines

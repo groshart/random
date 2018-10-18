@@ -1,7 +1,6 @@
 #ifndef XORSHIFT1024_RANDOM_H
 #define XORSHIFT1024_RANDOM_H
 #include <algorithm>
-#include <array>
 #include <cstdint>
 #include <iosfwd>
 #include <limits>
@@ -15,9 +14,7 @@ worldwide. This software is distributed without any warranty.
 
 See <http://creativecommons.org/publicdomain/zero/1.0/>. */
 
-// http://xoroshiro.di.unimi.it/
-
-class xorshift1024_engine // xorshift1024*
+class xorshift1024_engine // xorshift1024* (updated 2017-10-08)
 {
 public:
 	using result_type = uint64_t;
@@ -32,7 +29,7 @@ public:
 	}
 	void seed(result_type value = default_seed)
 	{
-		std::generate(begin(s), end(s), splitmix64_engine{ value });
+		std::generate(std::begin(s), std::end(s), splitmix64_engine{ value });
 		p = 0;
 	}
 	result_type operator()()
@@ -41,7 +38,7 @@ public:
 		uint64_t s1 = s[p = (p + 1) & 15];
 		s1 ^= s1 << 31; // a
 		s[p] = s1 ^ s0 ^ (s1 >> 11) ^ (s0 >> 30); // b,c
-		return s[p] * 1181783497276652981ULL;
+		return s[p] * 0x9e3779b97f4a7c13;
 	}
 	void discard(unsigned long long z)
 	{
@@ -55,7 +52,7 @@ public:
 	friend std::istream& operator>>(std::istream &, xorshift1024_engine &);
 
 private:
-	std::array<uint64_t, 16> s;
+	uint64_t s[16];
 	int p;
 };
 

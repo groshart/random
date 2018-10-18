@@ -12,8 +12,6 @@ worldwide. This software is distributed without any warranty.
 
 See <http://creativecommons.org/publicdomain/zero/1.0/>. */
 
-// http://xoroshiro.di.unimi.it/
-
 class splitmix64_engine // SplitMix64
 {
 public:

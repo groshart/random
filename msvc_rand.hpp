@@ -67,7 +67,7 @@ class msvc_rand_s_engine // RtlGenRandom
 public:
 	using result_type = uint32_t;
 
-	static constexpr result_type min() { return 0; }
+	static constexpr result_type min() { return std::numeric_limits<result_type>::min(); }
 	static constexpr result_type max() { return std::numeric_limits<result_type>::max(); }
 	static constexpr result_type default_seed = 0xDEADC0DE;
 

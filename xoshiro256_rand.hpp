@@ -1,5 +1,5 @@
-#ifndef XOROSHIRO128_RANDOM_H
-#define XOROSHIRO128_RANDOM_H
+#ifndef XOSHIRO256_RANDOM_H
+#define XOSHIRO256_RANDOM_H
 #ifdef _MSC_VER
 #include <intrin.h>
 #endif
@@ -17,7 +17,7 @@ worldwide. This software is distributed without any warranty.
 
 See <http://creativecommons.org/publicdomain/zero/1.0/>. */
 
-class xoroshiro128_engine // xoroshiro128**
+class xoshiro256_engine // xoshiro256**
 {
 public:
 	using result_type = uint64_t;
@@ -26,7 +26,7 @@ public:
 	static constexpr result_type max() { return std::numeric_limits<result_type>::max(); }
 	static constexpr result_type default_seed = 1;
 
-	explicit xoroshiro128_engine(result_type value = default_seed)
+	explicit xoshiro256_engine(result_type value = default_seed)
 	{
 		seed(value);
 	}
@@ -36,15 +36,20 @@ public:
 	}
 	result_type operator()()
 	{
-		const uint64_t s0 = s[0];
-		uint64_t s1 = s[1];
-		const uint64_t result = rotl(s0 * 5, 7) * 9;
+		const uint64_t result_starstar = rotl(s[1] * 5, 7) * 9;
 
-		s1 ^= s0;
-		s[0] = rotl(s0, 24) ^ s1 ^ (s1 << 16); // a, b
-		s[1] = rotl(s1, 37); // c
+		const uint64_t t = s[1] << 17;
 
-		return result;
+		s[2] ^= s[0];
+		s[3] ^= s[1];
+		s[1] ^= s[2];
+		s[0] ^= s[3];
+
+		s[2] ^= t;
+
+		s[3] = rotl(s[3], 45);
+
+		return result_starstar;
 	}
 	void discard(unsigned long long z)
 	{
@@ -53,9 +58,9 @@ public:
 		}
 	}
 
-	friend bool operator==(const xoroshiro128_engine &, const xoroshiro128_engine &);
-	friend std::ostream& operator<<(std::ostream &, const xoroshiro128_engine &);
-	friend std::istream& operator>>(std::istream &, xoroshiro128_engine &);
+	friend bool operator==(const xoshiro256_engine &, const xoshiro256_engine &);
+	friend std::ostream& operator<<(std::ostream &, const xoshiro256_engine &);
+	friend std::istream& operator>>(std::istream &, xoshiro256_engine &);
 
 private:
 	static uint64_t rotl(const uint64_t x, int k)
@@ -67,24 +72,24 @@ private:
 #endif
 	}
 
-	uint64_t s[2];
+	uint64_t s[4];
 };
 
-bool operator==(const xoroshiro128_engine &lhs, const xoroshiro128_engine &rhs)
+bool operator==(const xoshiro256_engine &lhs, const xoshiro256_engine &rhs)
 {
 	return lhs.s == rhs.s;
 }
-bool operator!=(const xoroshiro128_engine &lhs, const xoroshiro128_engine &rhs)
+bool operator!=(const xoshiro256_engine &lhs, const xoshiro256_engine &rhs)
 {
 	return !(lhs == rhs);
 }
-std::ostream& operator<<(std::ostream &os, const xoroshiro128_engine &eng)
+std::ostream& operator<<(std::ostream &os, const xoshiro256_engine &eng)
 {
-	return os << eng.s[0] << ' ' << eng.s[1];
+	return os << eng.s[0] << ' ' << eng.s[1] << ' ' << eng.s[2] << ' ' << eng.s[3];
 }
-std::istream& operator>>(std::istream &is, xoroshiro128_engine &eng)
+std::istream& operator>>(std::istream &is, xoshiro256_engine &eng)
 {
-	return is >> eng.s[0] >> eng.s[1];
+	return is >> eng.s[0] >> eng.s[1] >> eng.s[2] >> eng.s[3];
 }
 
-#endif // XOROSHIRO128_RANDOM_H
+#endif // XOSHIRO256_RANDOM_H

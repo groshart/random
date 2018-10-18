@@ -1,7 +1,6 @@
 #ifndef XORSHIFT128_RANDOM_H
 #define XORSHIFT128_RANDOM_H
 #include <algorithm>
-#include <array>
 #include <cstdint>
 #include <iosfwd>
 #include <limits>
@@ -14,8 +13,6 @@ and related and neighboring rights to this software to the public domain
 worldwide. This software is distributed without any warranty.
 
 See <http://creativecommons.org/publicdomain/zero/1.0/>. */
-
-// http://xoroshiro.di.unimi.it/
 
 class xorshift128_engine // xorshift128+
 {
@@ -32,7 +29,7 @@ public:
 	}
 	void seed(result_type value = default_seed)
 	{
-		std::generate(begin(s), end(s), splitmix64_engine{ value });
+		std::generate(std::begin(s), std::end(s), splitmix64_engine{ value });
 	}
 	result_type operator()()
 	{
@@ -56,7 +53,7 @@ public:
 	friend std::istream& operator>>(std::istream &, xorshift128_engine &);
 
 private:
-	std::array<uint64_t, 2> s;
+	uint64_t s[2];
 };
 
 bool operator==(const xorshift128_engine &lhs, const xorshift128_engine &rhs)

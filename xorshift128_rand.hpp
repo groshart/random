@@ -1,6 +1,7 @@
 #ifndef XORSHIFT128_RANDOM_H
 #define XORSHIFT128_RANDOM_H
 #include <algorithm>
+#include <array>
 #include <cstdint>
 #include <iosfwd>
 #include <limits>
@@ -53,7 +54,7 @@ public:
 	friend std::istream& operator>>(std::istream &, xorshift128_engine &);
 
 private:
-	uint64_t s[2];
+	std::array<uint64_t, 2> s;
 };
 
 bool operator==(const xorshift128_engine &lhs, const xorshift128_engine &rhs)

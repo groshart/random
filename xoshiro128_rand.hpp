@@ -34,7 +34,7 @@ public:
 	{
 		splitmix64_engine splitmix{ value };
 		uint64_t entropy[2] = { splitmix(), splitmix() };
-		memcpy(s, entropy, sizeof s);
+		memcpy(s.data(), entropy, sizeof s);
 	}
 	result_type operator()()
 	{
@@ -74,7 +74,7 @@ private:
 #endif
 	}
 
-	uint32_t s[4];
+	std::array<uint32_t, 4> s;
 };
 
 bool operator==(const xoshiro128_engine &lhs, const xoshiro128_engine &rhs)

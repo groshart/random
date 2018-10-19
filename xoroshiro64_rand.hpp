@@ -3,6 +3,7 @@
 #ifdef _MSC_VER
 #include <intrin.h>
 #endif
+#include <array>
 #include <cstdint>
 #include <iosfwd>
 #include <limits>
@@ -33,7 +34,7 @@ public:
 	{
 		splitmix64_engine splitmix{ value };
 		uint64_t entropy[1] = { splitmix() };
-		memcpy(s, entropy, sizeof s);
+		memcpy(s.data(), entropy, sizeof s);
 	}
 	result_type operator()()
 	{
@@ -68,7 +69,7 @@ private:
 #endif
 	}
 
-	uint32_t s[2];
+	std::array<uint32_t, 2> s;
 };
 
 bool operator==(const xoroshiro64_engine &lhs, const xoroshiro64_engine &rhs)

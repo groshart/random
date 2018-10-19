@@ -1,6 +1,7 @@
 #ifndef XORSHIFT1024_RANDOM_H
 #define XORSHIFT1024_RANDOM_H
 #include <algorithm>
+#include <array>
 #include <cstdint>
 #include <iosfwd>
 #include <limits>
@@ -52,7 +53,7 @@ public:
 	friend std::istream& operator>>(std::istream &, xorshift1024_engine &);
 
 private:
-	uint64_t s[16];
+	std::array<uint64_t, 16> s;
 	int p;
 };
 

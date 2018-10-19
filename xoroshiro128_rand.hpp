@@ -4,6 +4,7 @@
 #include <intrin.h>
 #endif
 #include <algorithm>
+#include <array>
 #include <cstdint>
 #include <iosfwd>
 #include <limits>
@@ -67,7 +68,7 @@ private:
 #endif
 	}
 
-	uint64_t s[2];
+	std::array<uint64_t, 2> s;
 };
 
 bool operator==(const xoroshiro128_engine &lhs, const xoroshiro128_engine &rhs)

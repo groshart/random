@@ -37,7 +37,7 @@ public:
 	}
 	result_type operator()()
 	{
-		const uint64_t result_starstar = rotl(s[1] * 5, 7) * 9;
+		const uint64_t result = rotl(s[1] * 5, 7) * 9;
 
 		const uint64_t t = s[1] << 17;
 
@@ -50,7 +50,7 @@ public:
 
 		s[3] = rotl(s[3], 45);
 
-		return result_starstar;
+		return result;
 	}
 	void discard(unsigned long long z)
 	{

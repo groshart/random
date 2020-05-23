@@ -33,7 +33,7 @@ public:
 	friend std::istream& operator>>(std::istream &, posix_engine &);
 
 private:
-	enum : result_type { A = 0x5DEECE66D, C = 0xB, M = 0 }; // FIXME: C4310 warning on Visual Studio /W4
+	enum : result_type { A = 0x5DEECE66D, C = 0xB, M = 0 };
 	enum : result_type { SHIFT16 = 16, SEED = 0x330E, M48 = (1ull << 48) - 1 }; // bits 47..0
 
 	std::linear_congruential_engine<result_type, A, C, M> engine;

@@ -17,7 +17,7 @@ worldwide. This software is distributed without any warranty.
 
 See <http://creativecommons.org/publicdomain/zero/1.0/>. */
 
-class xoshiro128_engine // xoshiro128**
+class xoshiro128_engine // xoshiro128** v1.1
 {
 public:
 	using result_type = uint32_t;
@@ -38,7 +38,7 @@ public:
 	}
 	result_type operator()()
 	{
-		const uint32_t result_starstar = rotl(s[0] * 5, 7) * 9;
+		const uint32_t result = rotl(s[1] * 5, 7) * 9;
 
 		const uint32_t t = s[1] << 9;
 
@@ -51,7 +51,7 @@ public:
 
 		s[3] = rotl(s[3], 11);
 
-		return result_starstar;
+		return result;
 	}
 	void discard(unsigned long long z)
 	{

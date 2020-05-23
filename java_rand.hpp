@@ -36,7 +36,7 @@ public:
 	friend std::istream& operator>>(std::istream &, java_engine &);
 
 private:
-	enum : param_type { A = 0x5DEECE66D, C = 0xB, M = 0 }; // FIXME: C4310 warning on Visual Studio /W4
+	enum : param_type { A = 0x5DEECE66D, C = 0xB, M = 0 };
 	enum : param_type { SHIFT16 = 16, M48 = (1ull << 48) - 1 }; // bits 47..16
 
 	std::linear_congruential_engine<param_type, A, C, M> engine;
